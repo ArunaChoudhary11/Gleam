@@ -4,39 +4,38 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-
     public float Focus;
     public float intensity;
     public float Wavelength;
     public bool hasSecondWeapon;
     public SecondaryWeapon secondaryWeapon;
+
     public GameObject AttackPoint;
     public float AttackSpeed;
+    public LayerMask enemeyMask;
     public bool isAttacking;
+    public Vector2 endPoint;
+    public float radius;
+    Collider2D ClostestEnemy;
+    public TestHealth enemyHealth;
+    public float AttackPower;
 
-    Vector2 endPoint;
 
-
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
-
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Mouse0)) // Left Mouse btn input
         {
+            enemyHealth = null;
+            AttackPoint.GetComponent<TrailRenderer>().enabled = false;
             AttackPoint.transform.position = transform.position;
-            endPoint = new Vector2(Random.Range(transform.position.x -5f , transform.position.x+5f) , Random.Range(transform.position.y - 5f, transform.position.y + 5f));
+            AttackPoint.GetComponent<TrailRenderer>().enabled = true;
+
             isAttacking = true;
+
+            endPoint = GetEnemyPosition();
         }
 
-        if(isAttacking)
+        if(isAttacking == true)
         {
             Attack(endPoint);
         }
@@ -44,15 +43,23 @@ public class PlayerAttack : MonoBehaviour
         float AttackDistance = Vector3.Distance(AttackPoint.transform.position , endPoint);
         if (AttackDistance <= 0.1f)
         {
+            if(isAttacking == true)
+            {
+                
+            if(enemyHealth != null)
+            {
+                enemyHealth.TakeDamage(AttackPower);
+            }
+            }
             isAttacking = false;
-        }
-            
+            AttackPoint.GetComponent<TrailRenderer>().enabled = false;
+        }            
     }
 
     private void Attack(Vector2 endPoint)
     {
         Debug.Log("Attack");
-        AttackPoint.transform.position = Vector2.Lerp(AttackPoint.transform.position, endPoint, AttackSpeed * Time.deltaTime );
+        AttackPoint.transform.position = Vector2.Lerp(AttackPoint.transform.position, endPoint, AttackSpeed * Time.deltaTime);
     }
 
     private void SecondWeapon()
@@ -61,5 +68,37 @@ public class PlayerAttack : MonoBehaviour
         {
             secondaryWeapon.Weapon();
         }
-    }  
+    }
+
+    public Vector2 GetEnemyPosition()
+    {
+        Collider2D[] Points = Physics2D.OverlapCircleAll(transform.position, radius , enemeyMask);
+
+        if(Points.Length == 0 )
+        {
+            return new Vector2(Random.Range(transform.position.x - 5f, transform.position.x + 5f), Random.Range(transform.position.y - 5f, transform.position.y + 5f));
+        }
+
+        for(int i = 0; i < Points.Length; i++)
+        {
+            if(ClostestEnemy == null)
+            {
+                ClostestEnemy = Points[i];
+
+            }
+            float ShortestDistance = Vector2.Distance(transform.position, Points[i].transform.position);
+            float CurrentDistance = Vector2.Distance(transform.position, ClostestEnemy.transform.position);
+            if(ShortestDistance <=  CurrentDistance)
+            {
+                ClostestEnemy = Points[i];
+            }
+        }
+        enemyHealth = ClostestEnemy.GetComponent<TestHealth>();
+        return ClostestEnemy.transform.position;
+    }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, radius);
+    }
 }
