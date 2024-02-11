@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestHealth : MonoBehaviour
+public class Testhealth : MonoBehaviour
 {
     public float health;
     public void TakeDamage(float _damage)
@@ -13,4 +13,5 @@ public class TestHealth : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
 }

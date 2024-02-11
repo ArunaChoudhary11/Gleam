@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAttack : MonoBehaviour
+public class playerAttack : MonoBehaviour
 {
     public float Focus;
     public float intensity;
@@ -17,12 +17,13 @@ public class PlayerAttack : MonoBehaviour
     public Vector2 endPoint;
     public float radius;
     Collider2D ClostestEnemy;
-    public TestHealth enemyHealth;
+    public Testhealth enemyHealth;
     public float AttackPower;
 
 
     void Update()
     {
+
         if (Input.GetKeyDown(KeyCode.Mouse0)) // Left Mouse btn input
         {
             enemyHealth = null;
@@ -35,25 +36,25 @@ public class PlayerAttack : MonoBehaviour
             endPoint = GetEnemyPosition();
         }
 
-        if(isAttacking == true)
+        if (isAttacking == true)
         {
             Attack(endPoint);
         }
 
-        float AttackDistance = Vector3.Distance(AttackPoint.transform.position , endPoint);
+        float AttackDistance = Vector3.Distance(AttackPoint.transform.position, endPoint);
         if (AttackDistance <= 0.1f)
         {
-            if(isAttacking == true)
+            if (isAttacking == true)
             {
-                
-            if(enemyHealth != null)
-            {
-                enemyHealth.TakeDamage(AttackPower);
-            }
+
+                if (enemyHealth != null)
+                {
+                    enemyHealth.TakeDamage(AttackPower);
+                }
             }
             isAttacking = false;
             AttackPoint.GetComponent<TrailRenderer>().enabled = false;
-        }            
+        }
     }
 
     private void Attack(Vector2 endPoint)
@@ -64,7 +65,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void SecondWeapon()
     {
-        if(hasSecondWeapon == true)
+        if (hasSecondWeapon == true)
         {
             secondaryWeapon.Weapon();
         }
@@ -72,28 +73,28 @@ public class PlayerAttack : MonoBehaviour
 
     public Vector2 GetEnemyPosition()
     {
-        Collider2D[] Points = Physics2D.OverlapCircleAll(transform.position, radius , enemeyMask);
+        Collider2D[] Points = Physics2D.OverlapCircleAll(transform.position, radius, enemeyMask);
 
-        if(Points.Length == 0 )
+        if (Points.Length == 0)
         {
             return new Vector2(Random.Range(transform.position.x - 5f, transform.position.x + 5f), Random.Range(transform.position.y - 5f, transform.position.y + 5f));
         }
 
-        for(int i = 0; i < Points.Length; i++)
+        for (int i = 0; i < Points.Length; i++)
         {
-            if(ClostestEnemy == null)
+            if (ClostestEnemy == null)
             {
                 ClostestEnemy = Points[i];
 
             }
             float ShortestDistance = Vector2.Distance(transform.position, Points[i].transform.position);
             float CurrentDistance = Vector2.Distance(transform.position, ClostestEnemy.transform.position);
-            if(ShortestDistance <=  CurrentDistance)
+            if (ShortestDistance <= CurrentDistance)
             {
                 ClostestEnemy = Points[i];
             }
         }
-        enemyHealth = ClostestEnemy.GetComponent<TestHealth>();
+        enemyHealth = ClostestEnemy.GetComponent<Testhealth>();
         return ClostestEnemy.transform.position;
     }
     private void OnDrawGizmos()
