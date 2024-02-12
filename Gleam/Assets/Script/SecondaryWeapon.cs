@@ -7,7 +7,7 @@ public class SecondaryWeapon : MonoBehaviour
     public float Focus;
     public float intensity;
     public float Wavelength;
-    public playerAttack Attack;
+    public PlayerAttack Attack;
 
     // Start is called before the first frame update
     void Start()
