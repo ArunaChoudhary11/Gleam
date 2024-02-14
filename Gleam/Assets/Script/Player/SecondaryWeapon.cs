@@ -24,7 +24,7 @@ public class SecondaryWeapon : MonoBehaviour
     {
         if (Wavelength <= 0)
         {
-            Attack.hasSecondWeapon = false;
+            //Attack.hasSecondWeapon = false;
             Destroy(gameObject);
         }
     }
