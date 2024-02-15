@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
@@ -15,8 +14,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private LayerMask ObstacleMask;
     [SerializeField] private float AttackSpeed;
     [SerializeField] private float AttackPower;
-    [SerializeField] private float radius;
-    private Collider2D ClostestEnemy;
+    private Collider2D ClosestEnemy;
     private TestHealth enemyHealth;
     private FieldOfView fieldOfView;
     
@@ -31,7 +29,7 @@ public class PlayerAttack : MonoBehaviour
             GameObject newAttackPoint = Instantiate(AttackPoint, transform.position, Quaternion.identity);
             Vector2 endPoint = GetEnemyPosition();
             PrimaryAttack attack = newAttackPoint.GetComponent<PrimaryAttack>();
-            attack.GetValues(newAttackPoint, endPoint, enemyHealth, AttackPower, AttackSpeed);
+            attack.SetValues(endPoint, enemyHealth, AttackPower, AttackSpeed);
         }
     }
 
@@ -43,6 +41,8 @@ public class PlayerAttack : MonoBehaviour
     //     }
     // }
 
+    public int playerDirection;
+    public Vector2 direction;
     public Vector2 GetEnemyPosition()
     {
         fieldOfView.FindVisibleTargets();
@@ -51,36 +51,49 @@ public class PlayerAttack : MonoBehaviour
         if(Points.Count == 0)
         {
             enemyHealth = null;
-            int playerDirection = (int) transform.localScale.x;
-            Vector2 newPoint = new Vector2(Random.Range(transform.position.x, transform.position.x + 5f * playerDirection), Random.Range(transform.position.y, transform.position.y + 5f));
-            RaycastHit2D hit = Physics2D.Raycast (transform.position, newPoint, (newPoint - (Vector2) transform.position).sqrMagnitude, ObstacleMask);
+            playerDirection = (int) transform.localScale.x;
+            Vector2 newPoint = new();
+
+            if(playerDirection > 0)
+            {
+                newPoint.x = Random.Range(transform.position.x, transform.position.x + 7f);
+            }
+            else
+            {
+                newPoint.x = Random.Range(transform.position.x - 7f, transform.position.x);
+            }
+
+            newPoint.y = Random.Range(transform.position.y, transform.position.y + 7f);
+
+            direction = newPoint - (Vector2) transform.position;
+            float distance = direction.magnitude;
+
+            RaycastHit2D hit = Physics2D.Raycast (transform.position, direction, distance, ObstacleMask);
             
             if(hit.collider != null)
             {
+                Debug.DrawLine(transform.position, hit.point, Color.grey, 1);
                 return hit.point;
             }
+
+            Debug.DrawLine(transform.position, newPoint, Color.cyan, 1);
             return newPoint;
         }
 
         for(int i = 0; i < Points.Count; i++)
         {
-            if(ClostestEnemy == null)
+            if(ClosestEnemy == null)
             {
-                ClostestEnemy = Points[i];
+                ClosestEnemy = Points[i];
             }
             float ShortestDistance = Vector2.Distance(transform.position, Points[i].transform.position);
-            float CurrentDistance = Vector2.Distance(transform.position, ClostestEnemy.transform.position);
+            float CurrentDistance = Vector2.Distance(transform.position, ClosestEnemy.transform.position);
             if(ShortestDistance <=  CurrentDistance)
             {
-                ClostestEnemy = Points[i];
+                ClosestEnemy = Points[i];
             }
         }
-        enemyHealth = ClostestEnemy.GetComponent<TestHealth>();
-        return ClostestEnemy.transform.position;
-    }
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, radius);
+        enemyHealth = ClosestEnemy.GetComponent<TestHealth>();
+        return ClosestEnemy.transform.position;
     }
 }
