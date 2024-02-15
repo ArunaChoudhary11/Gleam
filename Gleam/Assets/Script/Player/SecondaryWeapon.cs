@@ -5,17 +5,13 @@ using UnityEngine;
 public class SecondaryWeapon : MonoBehaviour
 {
     public float Focus;
-    public float intensity;
+    public float Intensity;
     public float Wavelength;
     public PlayerAttack Attack;
-
-    // Start is called before the first frame update
     void Start()
     {
 
     }
-
-    // Update is called once per frame
     void Update()
     {
 
@@ -24,7 +20,7 @@ public class SecondaryWeapon : MonoBehaviour
     {
         if (Wavelength <= 0)
         {
-            Attack.hasSecondWeapon = false;
+            //Attack.hasSecondWeapon = false;
             Destroy(gameObject);
         }
     }
