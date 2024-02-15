@@ -1,24 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
 
 public class PhotonShield : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public float Angle;
+    public float range;
+    
+
     void Start()
     {
         
     }
 
-    // Update is called once per frame
+     
     void Update()
     {
-        
+        Shield(transform.up);
     }
 
-    private void Shield(Vector2 hitPoint , Vector2 hitNormal)
+    public  void Shield(Vector2 hitNormal)
     {
-        
+        Vector3 ray1 = Quaternion.AngleAxis(Angle / 2, Vector3.forward) * hitNormal;
+        Vector3 ray2 = Quaternion.AngleAxis(-Angle / 2, Vector3.forward) * hitNormal;
+        Debug.DrawRay(transform.position, ray1 * range, Color.red);
+        Debug.DrawRay(transform.position, ray2 * range, Color.red);
     }
 }
