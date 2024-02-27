@@ -51,6 +51,7 @@ public class PlayerMove : MonoBehaviour
     }
     void Update()
     {
+        //Slide();
         ClampYVelocity();
 
         isGrounded = Physics2D.OverlapBox(groundCheck.position, Vector2.one, 0, groundLayer);
@@ -60,17 +61,35 @@ public class PlayerMove : MonoBehaviour
         {
             return;
         }
+
+        JumpAction();
+
+        if(isSliding)
+            return;
         
         EdgeDetection();
         Friction();
 
-        if(Input.GetKeyDown(KeyCode.LeftShift) && canDash)
+        if(Input.GetKeyDown(KeyCode.LeftShift) && canDash && PlayerManager.Instance.CanDash)
         {
             Debug.Log("Dashing");
             StartCoroutine(Dash());
-        }
+        }       
 
+        WallSlide();
+        WallJump();
+
+        if(!iswallJumping)
+        {
+            Flip();
+        }
+    }
+    private void JumpAction()
+    {
         jumpPhase = isGrounded == true ? maxJump : jumpPhase;
+
+        if(PlayerManager.Instance.CanJump == false) return;
+
         if(isGrounded || jumpPhase > 0)
         {
             coyoteTime = 0.2f;
@@ -105,14 +124,6 @@ public class PlayerMove : MonoBehaviour
                 coyoteTime = 0f;
             }
         }
-
-        WallSlide();
-        WallJump();
-
-        if(!iswallJumping)
-        {
-            Flip();
-        }
     }
     private void ClampYVelocity()
     {
@@ -135,7 +146,7 @@ public class PlayerMove : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if(!iswallJumping && !isDashing)
+        if(!iswallJumping && !isDashing && !isSliding)
         {
             Movement();
         }
@@ -176,9 +187,39 @@ public class PlayerMove : MonoBehaviour
             isWallSliding = false;
         }
     }
-    private void Slide(Vector2 slideingDirection)
-    {
-        rb.AddForce(slideingDirection * SlidingSpeed * transform.localScale.x);
+    [SerializeField] private Vector2 slidingDirection;
+    private void Slide()
+    {        
+        if(isSliding == true)
+        {
+            Debug.DrawRay(groundCheck.position, Vector2.down, Color.green);
+            RaycastHit2D hit = Physics2D.Raycast(groundCheck.position, Vector2.down, 1, groundLayer);
+
+            if(hit.collider != null)
+            {
+                slidingDirection = Quaternion.AngleAxis(90, Vector3.forward) * hit.normal;
+                Debug.DrawRay(hit.point, slidingDirection * 10, Color.blue);
+            }
+
+            rb.freezeRotation = false;
+            
+            if(isGrounded == true)
+            {
+                rb.gravityScale = 0;
+            }
+            else
+            {
+                rb.MoveRotation(0);
+                rb.gravityScale = 15;
+            }
+
+            rb.AddForce(slidingDirection * SlidingSpeed * transform.localScale.x);
+        }
+        else
+        {
+            rb.freezeRotation = true;
+            rb.MoveRotation(0);
+        }
     }
     private void WallJump()
     {
@@ -195,14 +236,13 @@ public class PlayerMove : MonoBehaviour
             wallJumpingCounter -= Time.deltaTime;
         }
 
-        if(Input.GetButtonDown("Jump") && wallJumpingCounter > 0f)
+        if(Input.GetButtonDown("Jump") && isGrounded == false && wallJumpingCounter > 0f)
         {
             iswallJumping = true;
 
             Vector2 vel = rb.velocity;
             vel.y = 0;
             rb.velocity = vel;
-
             rb.velocity = new Vector2(wallJumpingDirection * wallJumpingPower.x, wallJumpingPower.y);
             wallJumpingCounter = 0f;
 

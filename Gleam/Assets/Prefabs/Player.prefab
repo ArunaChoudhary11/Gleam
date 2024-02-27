@@ -274,16 +274,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96c415f309a822d488390d829c7d2200, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 8
+  jumpingPower: 16
+  decceleration: 10
+  platformMask:
+    serializedVersion: 2
+    m_Bits: 256
+  canDash: 1
+  dashingPower: 16
+  dashingTime: 0.2
+  wallSlidingSpeed: 1
+  wallJumpingTime: 0.2
+  wallJumpingduration: 0.2
+  wallJumpingPower: {x: 8, y: 16}
   groundCheck: {fileID: 8407938653761042487}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 264
   tr: {fileID: 8407938653959168672}
   wallCheck: {fileID: 8407938654620463973}
   wallLayer:
     serializedVersion: 2
     m_Bits: 64
-  isGrounded: 0
+  maxJump: 0
+  isSliding: 0
+  SlidingSpeed: 0
+  slidingDirection: {x: 0, y: 0}
 --- !u!50 &8407938654507523231
 Rigidbody2D:
   serializedVersion: 4
@@ -299,7 +315,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0.5
+  m_GravityScale: 15
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -344,12 +360,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AttackPoint: {fileID: 8005404050926662323, guid: bd21d36f43b67354d874d33ead8bdfd0, type: 3}
-  enemeyMask:
-    serializedVersion: 2
-    m_Bits: 128
   AttackSpeed: 20
   AttackPower: 25
-  radius: 10
 --- !u!1 &8407938654620463974
 GameObject:
   m_ObjectHideFlags: 0

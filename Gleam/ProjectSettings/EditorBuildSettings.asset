@@ -6,6 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
+    path: Assets/Scenes/Menu/Main Menu.unity
+    guid: a1cae08d6f8520044adfbafdee5c97ec
+  - enabled: 1
+    path: Assets/Scenes/Chapter 0/1. Initial Fight.unity
+    guid: 01dc68a83e0a47f4187324901a981186
+  - enabled: 1
+    path: Assets/Scenes/Chapter 0/2. Tutorial.unity
+    guid: 4d4314b930d33a848ac60f3fc1391488
+  - enabled: 1
+    path: Assets/Scenes/Chapter 0/3. Group Interaction.unity
+    guid: d67badc237d5a68499e8558cd56bd267
   m_configObjects: {}
