@@ -26,6 +26,8 @@ public class PlayerManager : MonoBehaviour
     public bool canUse_PrimaryAttack;
     public bool canUse_SecondaryAttack;
     public bool CanMove;
+    public bool CanJump;
+    public bool CanDash;
     public bool IsInvincible;
     
     [HideInInspector] public Collider2D ClosestEnemy;    
@@ -67,7 +69,7 @@ public class PlayerManager : MonoBehaviour
         selectionDirection.enabled = canUse_SolDash;
         speedTimeDilation.enabled = canUse_SpeedDilation;
         nightVision.enabled = canUse_NightVision;
-        photonShield.enabled = canUse_PhotonShield;
+//        photonShield.enabled = canUse_PhotonShield;
         playerAttack.enabled = canUse_PrimaryAttack;
         secondaryWeapon.enabled = canUse_SecondaryAttack;
     }

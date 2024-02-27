@@ -44,7 +44,7 @@ public class Enemytest : MonoBehaviour
 
         attackDelay += Time.deltaTime;
     }
-    private void Attack()
+    public void Attack()
     {
         if(isRefracted == true)
         {
