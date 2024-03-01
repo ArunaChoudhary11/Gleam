@@ -849,7 +849,6 @@ GameObject:
   - component: {fileID: 534562756}
   - component: {fileID: 534562755}
   - component: {fileID: 534562754}
-  - component: {fileID: 534562757}
   m_Layer: 3
   m_Name: Land
   m_TagString: Untagged
@@ -950,24 +949,6 @@ Transform:
   m_Father: {fileID: 950231670}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!252 &534562757
-SurfaceEffector2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 534562753}
-  m_Enabled: 1
-  m_UseColliderMask: 1
-  m_ColliderMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_Speed: 5
-  m_SpeedVariation: 0
-  m_ForceScale: 0.1
-  m_UseContactForce: 0
-  m_UseFriction: 1
-  m_UseBounce: 1
 --- !u!1 &646443711
 GameObject:
   m_ObjectHideFlags: 0
@@ -2574,9 +2555,25 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4213011758183068342, guid: c7f61457fdb8f294c9689c6ba33d748e, type: 3}
+      propertyPath: CanDash
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4213011758183068342, guid: c7f61457fdb8f294c9689c6ba33d748e, type: 3}
+      propertyPath: CanJump
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4213011758183068342, guid: c7f61457fdb8f294c9689c6ba33d748e, type: 3}
+      propertyPath: CanMove
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4213011758183068342, guid: c7f61457fdb8f294c9689c6ba33d748e, type: 3}
       propertyPath: photonShield
       value: 
       objectReference: {fileID: 266227463}
+    - target: {fileID: 4213011758183068342, guid: c7f61457fdb8f294c9689c6ba33d748e, type: 3}
+      propertyPath: canUse_PrimaryAttack
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4213011758183068349, guid: c7f61457fdb8f294c9689c6ba33d748e, type: 3}
       propertyPath: m_Name
       value: Player
