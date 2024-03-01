@@ -389,11 +389,11 @@ MonoBehaviour:
   canUse_Refract: 0
   canUse_NightVision: 0
   canUse_PhotonShield: 0
-  canUse_PrimaryAttack: 0
+  canUse_PrimaryAttack: 1
   canUse_SecondaryAttack: 0
-  CanMove: 0
-  CanJump: 0
-  CanDash: 0
+  CanMove: 1
+  CanJump: 1
+  CanDash: 1
   IsInvincible: 0
   ClosestEnemy: {fileID: 0}
   ObstacleMask:

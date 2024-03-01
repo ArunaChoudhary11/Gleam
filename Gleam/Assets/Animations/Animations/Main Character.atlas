@@ -1,0 +1,97 @@
+
+Main Character.png
+size: 1907,1225
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Hairs
+  rotate: true
+  xy: 1368, 628
+  size: 595, 537
+  orig: 670, 733
+  offset: 1, 196
+  index: -1
+Head
+  rotate: true
+  xy: 2, 489
+  size: 734, 398
+  orig: 734, 398
+  offset: 0, 0
+  index: -1
+Left Thigh
+  rotate: false
+  xy: 783, 5
+  size: 364, 494
+  orig: 540, 496
+  offset: 176, 0
+  index: -1
+Right Thigh
+  rotate: true
+  xy: 262, 27
+  size: 460, 519
+  orig: 544, 519
+  offset: 0, 0
+  index: -1
+Torso
+  rotate: false
+  xy: 402, 501
+  size: 587, 722
+  orig: 587, 722
+  offset: 0, 0
+  index: -1
+eyebrows
+  rotate: true
+  xy: 1848, 191
+  size: 302, 29
+  orig: 302, 29
+  offset: 0, 0
+  index: -1
+eyes
+  rotate: false
+  xy: 1368, 537
+  size: 311, 89
+  orig: 311, 89
+  offset: 0, 0
+  index: -1
+eyes closed
+  rotate: false
+  xy: 1469, 89
+  size: 318, 76
+  orig: 318, 76
+  offset: 0, 0
+  index: -1
+left arm
+  rotate: false
+  xy: 1149, 2
+  size: 318, 515
+  orig: 318, 665
+  offset: 0, 150
+  index: -1
+left hand
+  rotate: true
+  xy: 1681, 495
+  size: 131, 205
+  orig: 131, 205
+  offset: 0, 0
+  index: -1
+left leg
+  rotate: false
+  xy: 2, 18
+  size: 258, 469
+  orig: 258, 469
+  offset: 0, 0
+  index: -1
+right arm
+  rotate: false
+  xy: 991, 519
+  size: 375, 704
+  orig: 375, 704
+  offset: 0, 0
+  index: -1
+right leg
+  rotate: true
+  xy: 1469, 167
+  size: 326, 377
+  orig: 326, 377
+  offset: 0, 0
+  index: -1
