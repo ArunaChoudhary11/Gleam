@@ -2,11 +2,16 @@ using UnityEngine;
 
 public class PhotonicHealingCheckpoints : MonoBehaviour
 {
-    public int greenPowerUpsCount;
-    public float holdTimer;
+    public Inventory inventory;
+    public bool CanCreateGreenZone;
+    public ParticleSystem chgfh;
+
+     public float holdTimer;
     void Update()
     {
-        if(greenPowerUpsCount >= 4)
+        CanCreateGreenZone = inventory.collectables.greenCollectable == inventory.collectables.maxGreenCollect;
+
+        if(CanCreateGreenZone)
         {
             if(Input.GetKey(KeyCode.E))
             {
@@ -19,15 +24,16 @@ public class PhotonicHealingCheckpoints : MonoBehaviour
             holdTimer = 0;
         }
 
-        if(holdTimer >= 1.5f)
+        if(holdTimer >= 0.5f)
         {
             SetCheckpoint();
             holdTimer = 0;
-            greenPowerUpsCount -= 4;
         }
     }
     private void SetCheckpoint()
     {
+        inventory.collectables.greenCollectable = 0;
         Debug.Log("CheckPoint Set");
+
     }
 }
