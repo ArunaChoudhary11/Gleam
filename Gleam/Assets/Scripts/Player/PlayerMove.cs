@@ -289,17 +289,17 @@ public class PlayerMove : MonoBehaviour
     private bool hasHitEdge = false;
     private void EdgeDetection()
     {
-        Vector2 leftRayPosition = transform.position - new Vector3(0.45f, -0.4f, 0);
-        Vector2 rightRayPosition = transform.position + new Vector3(0.45f, 0.4f, 0);
-        Vector2 centerBoxPosition = transform.position + new Vector3(0, 0.4f, 0);
+        Vector2 leftRayPosition = transform.position - new Vector3(0.45f * Mathf.Abs(transform.localScale.x), -0.4f * Mathf.Abs(transform.localScale.y), 0);
+        Vector2 rightRayPosition = transform.position + new Vector3(0.45f * Mathf.Abs(transform.localScale.x), 0.4f * Mathf.Abs(transform.localScale.y), 0);
+        Vector2 centerBoxPosition = transform.position + new Vector3(0, 0.4f * Mathf.Abs(transform.localScale.y), 0);
         Vector2 middleBoxPosition = transform.position;
-        Vector2 bottomRayPosition = transform.position - new Vector3(1f, 0.4f, 0);
+        Vector2 bottomRayPosition = transform.position - new Vector3(1f * Mathf.Abs(transform.localScale.x), 0.4f * Mathf.Abs(transform.localScale.y), 0);
 
-        Vector2 leftBoxSize = new Vector3(0.1f, 0.5f, 0);
-        Vector2 rightBoxSize = new Vector3(0.1f, 0.5f, 0);
-        Vector2 centerBoxSize = new Vector3(0.5f, 0.5f, 0);
-        Vector2 middleBoxSize = new Vector3(1.2f, 0.6f, 0);
-        Vector2 bottomBoxSize = new Vector3(1.3f, 0.2f, 0);
+        Vector2 leftBoxSize = new Vector3(0.1f * Mathf.Abs(transform.localScale.x), 0.5f * Mathf.Abs(transform.localScale.y), 0);
+        Vector2 rightBoxSize = new Vector3(0.1f * Mathf.Abs(transform.localScale.x), 0.5f * Mathf.Abs(transform.localScale.y), 0);
+        Vector2 centerBoxSize = new Vector3(0.5f * Mathf.Abs(transform.localScale.x), 0.5f * Mathf.Abs(transform.localScale.y), 0);
+        Vector2 middleBoxSize = new Vector3(1.2f * Mathf.Abs(transform.localScale.x), 0.6f * Mathf.Abs(transform.localScale.y), 0);
+        Vector2 bottomBoxSize = new Vector3(1.3f * Mathf.Abs(transform.localScale.x), 0.2f * Mathf.Abs(transform.localScale.y), 0);
 
         Debug.DrawRay(leftRayPosition, Vector2.up, Color.green);
         Debug.DrawRay(rightRayPosition, Vector2.up, Color.green);
@@ -363,12 +363,12 @@ public class PlayerMove : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(transform.position + new Vector3(0.45f, 0.4f, 0), new Vector3(0.1f, 0.5f, 0));
-        Gizmos.DrawWireCube(transform.position - new Vector3(0.45f, -0.4f, 0), new Vector3(0.1f, 0.5f, 0));
-        Gizmos.DrawWireCube(transform.position - new Vector3(0f, 0.45f, 0), new Vector3(1.2f, 0.1f, 0));
+        Gizmos.DrawWireCube(transform.position + new Vector3(0.45f * Mathf.Abs(transform.localScale.x), 0.4f * Mathf.Abs(transform.localScale.y), 0), new Vector3(0.1f * Mathf.Abs(transform.localScale.x), 0.5f * Mathf.Abs(transform.localScale.y) , 0));
+        Gizmos.DrawWireCube(transform.position - new Vector3(0.45f * Mathf.Abs(transform.localScale.x), -0.4f * Mathf.Abs(transform.localScale.y), 0), new Vector3(0.1f * Mathf.Abs(transform.localScale.x), 0.5f * Mathf.Abs(transform.localScale.y), 0));
+        Gizmos.DrawWireCube(transform.position - new Vector3(0f, 0.45f * Mathf.Abs(transform.localScale.y), 0), new Vector3(1.2f * Mathf.Abs(transform.localScale.x), 0.1f * Mathf.Abs(transform.localScale.y), 0));
 
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube(transform.position, new Vector3(1.2f, 0.6f, 0));
-        Gizmos.DrawWireCube(transform.position + new Vector3(0, 0.4f, 0), new Vector3(0.5f, 0.5f, 0));
+        Gizmos.DrawWireCube(transform.position, new Vector3(1.2f * Mathf.Abs(transform.localScale.x), 0.6f * Mathf.Abs(transform.localScale.y), 0));
+        Gizmos.DrawWireCube(transform.position + new Vector3(0, 0.4f * Mathf.Abs(transform.localScale.y), 0), new Vector3(0.5f * Mathf.Abs(transform.localScale.x), 0.5f * Mathf.Abs(transform.localScale.y), 0));
     }
 }

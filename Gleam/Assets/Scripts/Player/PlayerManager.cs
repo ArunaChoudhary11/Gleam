@@ -79,6 +79,7 @@ public class PlayerManager : MonoBehaviour
         if(IsInvincible == true) return;
 
         health -= _damage;
+        
         if (health <= 0)
         {
             Destroy(gameObject);
