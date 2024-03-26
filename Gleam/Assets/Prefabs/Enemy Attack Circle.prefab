@@ -98,13 +98,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abf896e4eeb149b4c81993eea1db8f3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackRaySize: 5
-  _damage: 0
-  startPoint: {x: 0, y: 0}
-  rb: {fileID: 0}
   mask:
     serializedVersion: 2
-    m_Bits: 895
+    m_Bits: 1919
 --- !u!50 &3518180008020384901
 Rigidbody2D:
   serializedVersion: 4

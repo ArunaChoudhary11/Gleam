@@ -7,19 +7,29 @@ public class SelectionDirection : MonoBehaviour
     private Vector2 lastSelectionInput;
     private Vector2 ScanPoint;
     private float size = 15;
-    public Transform Point;
+    [SerializeField] private Transform Point;
     private List<Transform> Points = new List<Transform>();
-    [HideInInspector] public bool canSelect;
-    [HideInInspector] public Transform CurrentSelectedEnemy;
+    public bool canSelect;
+    [HideInInspector] public Transform CurrentSelectedEnemy; // The Output Needed
 	[SerializeField] private LayerMask targetMask;
  	[SerializeField] private LayerMask obstacleMask;
-    private Collider2D ClosestPoint;
+
     void Start()
     {
         CurrentSelectedEnemy = transform;
     }
     void Update()
     {
+        currentSelectionInput = new (Mathf.RoundToInt(Input.GetAxis("Mouse X")), Mathf.RoundToInt(Input.GetAxis("Mouse Y")));
+
+        if(Input.GetMouseButtonDown(2))
+        {
+            FindVisibleTargets();
+            CurrentSelectedEnemy = GetClosestEnemy();
+            if(CurrentSelectedEnemy == null) CurrentSelectedEnemy = transform;
+            canSelect = !canSelect;
+        }
+
         if(canSelect == true)
         {
             GetPoint();
@@ -27,22 +37,54 @@ public class SelectionDirection : MonoBehaviour
             else Point.position = transform.position;
         }
     }
-    private void GetPoint()
+    private Transform GetClosestEnemy()
     {
-        currentSelectionInput = new (Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        
+        Transform ClosestEnemy = null;
+
+        if(Points.Count == 0)
+        {
+            if(CurrentSelectedEnemy != null) return CurrentSelectedEnemy;
+
+            return null;
+        }
+
+        for(int i = 0; i < Points.Count; i++)
+        {
+            if(ClosestEnemy == null)
+            {
+                ClosestEnemy = Points[i];
+            }
+
+            float ShortestDistance = Vector2.Distance(transform.position, Points[i].transform.position);
+            float CurrentDistance = Vector2.Distance(transform.position, ClosestEnemy.transform.position);
+
+            if(ShortestDistance <=  CurrentDistance)
+            {
+                ClosestEnemy = Points[i];
+            }
+        }
+
+        return ClosestEnemy.transform;
+    }
+    private void GetPoint()
+    {        
         if(currentSelectionInput != lastSelectionInput)
         {
             lastSelectionInput = currentSelectionInput;
 
-            if(currentSelectionInput == Vector2.zero) return;
+            if(CurrentSelectedEnemy != null)
+            {
+                if(currentSelectionInput == Vector2.zero) return;
+            }
 
             if(CurrentSelectedEnemy == null) CurrentSelectedEnemy = transform;
             ScanPoint = (Vector2) CurrentSelectedEnemy.position + (currentSelectionInput.normalized * size / 2);
 
             Points = VisibleTargets();
-            CurrentSelectedEnemy = GetClosestTransform();
+            CurrentSelectedEnemy = GetClosestEnemy();
         }
+
+        if(CurrentSelectedEnemy == null) canSelect = false;
     }
     private Vector2 ScanSize()
     {
@@ -54,44 +96,16 @@ public class SelectionDirection : MonoBehaviour
             if(sizeX == 1 && sizeY == 0)
             {
                 sizeX = 1;
-                sizeY = 2;
+                sizeY = 1;
             }
             else if(sizeX == 0 && sizeY == 1)
             {   
-                sizeX = 2;
+                sizeX = 1;
                 sizeY = 1;            
             }
         }
         
         return new Vector2(sizeX, sizeY);
-    }
-    private Transform GetClosestTransform()
-    {
-        if(Points.Count == 0)
-        {
-            if(ClosestPoint == null) return transform;
-            return ClosestPoint.transform;
-        }
-
-        ClosestPoint = null;
-
-        for(int i = 0; i < Points.Count; i++)
-        {
-            if(ClosestPoint == null)
-            {
-                ClosestPoint = Points[i].GetComponent<Collider2D>();
-            }
-
-            float ShortestDistance = Vector2.Distance(CurrentSelectedEnemy.position, Points[i].transform.position);
-            float CurrentDistance = Vector2.Distance(CurrentSelectedEnemy.position, ClosestPoint.transform.position);
-
-            if(ShortestDistance <=  CurrentDistance)
-            {
-                ClosestPoint = Points[i].GetComponent<Collider2D>();
-            }
-        }
-
-        return ClosestPoint.transform;
     }
  	public List<Transform> VisibleTargets()
 	{
@@ -114,4 +128,27 @@ public class SelectionDirection : MonoBehaviour
 
         return points;
 	}
+    public void FindVisibleTargets()
+	{
+		Points.Clear();
+		Collider2D[] targetsInViewRadius = Physics2D.OverlapCircleAll(transform.position, size, targetMask);
+
+		for (int i = 0; i < targetsInViewRadius.Length; i++)
+		{
+			Transform target = targetsInViewRadius[i].transform;
+			Vector3 dirToTarget = (target.position - transform.position).normalized;
+
+            float dstToTarget = Vector3.Distance (transform.position, target.position);
+
+            if (!Physics2D.Raycast (transform.position, dirToTarget, dstToTarget, obstacleMask))
+            {
+                Points.Add (target.GetComponent<Collider2D>().transform);
+            }
+		}
+	}
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(ScanPoint, ScanSize() * size);
+    }
 }

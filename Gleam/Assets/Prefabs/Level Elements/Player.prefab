@@ -214,11 +214,9 @@ GameObject:
   - component: {fileID: 4213011758183068351}
   - component: {fileID: 4213011758183068345}
   - component: {fileID: 4213011758183068347}
-  - component: {fileID: 4213011758183068338}
   - component: {fileID: 4213011758183068342}
   - component: {fileID: 4213011758183068344}
   - component: {fileID: 4213011758183068346}
-  - component: {fileID: 4213011758183068341}
   - component: {fileID: 4213011758183068336}
   - component: {fileID: 4213011758183071050}
   - component: {fileID: 4213011758183068337}
@@ -241,8 +239,8 @@ Transform:
   m_GameObject: {fileID: 4213011758183068349}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -177.097, y: -3.151, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 1, y: 1.25, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4213011757973247505}
   - {fileID: 4213011757021814083}
@@ -349,27 +347,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &4213011758183068338
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4213011758183068349}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 933f27ed8a5cf43359d7caf0a5f5e732, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  viewRadius: 12
-  viewAngle: 360
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 128
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 383
-  visibleTargets: []
 --- !u!114 &4213011758183068342
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -389,8 +366,7 @@ MonoBehaviour:
   canUse_Refract: 0
   canUse_NightVision: 0
   canUse_PhotonShield: 0
-  canUse_PrimaryAttack: 1
-  canUse_SecondaryAttack: 0
+  CanAttack: 1
   CanMove: 1
   CanJump: 1
   CanDash: 1
@@ -453,22 +429,6 @@ MonoBehaviour:
   AttackPoint: {fileID: 8005404050926662323, guid: bd21d36f43b67354d874d33ead8bdfd0, type: 3}
   AttackSpeed: 50
   AttackPower: 25
---- !u!114 &4213011758183068341
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4213011758183068349}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6a35d47611b74045a46766a578509aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Focus: 0
-  Intensity: 0
-  Wavelength: 0
-  Attack: {fileID: 0}
 --- !u!114 &4213011758183068336
 MonoBehaviour:
   m_ObjectHideFlags: 0

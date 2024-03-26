@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
@@ -12,19 +11,15 @@ public class PlayerManager : MonoBehaviour
     [HideInInspector] public Refract refract;
     private NightVision nightVision;
     private PlayerAttack playerAttack;
-    private SecondaryWeapon secondaryWeapon;
     [SerializeField] private PhotonShield photonShield;
     #endregion
-    
-    private FieldOfView fieldOfView;
 
     public bool canUse_SolDash;
     public bool canUse_SpeedDilation;
     public bool canUse_Refract;
     public bool canUse_NightVision;
     public bool canUse_PhotonShield;
-    public bool canUse_PrimaryAttack;
-    public bool canUse_SecondaryAttack;
+    public bool CanAttack;
     public bool CanMove;
     public bool CanJump;
     public bool CanDash;
@@ -45,13 +40,11 @@ public class PlayerManager : MonoBehaviour
         refract = GetComponent<Refract>();
         nightVision = GetComponent<NightVision>();
         playerAttack = GetComponent<PlayerAttack>();
-        secondaryWeapon = GetComponent<SecondaryWeapon>();
         playerMove = GetComponent<PlayerMove>();
     }
     private void InitializeComponents()
     {
         selectionDirection = GetComponent<SelectionDirection>();
-        fieldOfView = GetComponent<FieldOfView>();
     }
     void Start()
     {
@@ -66,12 +59,10 @@ public class PlayerManager : MonoBehaviour
     {
         playerMove.enabled = CanMove;
         soL_Dash.enabled = canUse_SolDash;
-        selectionDirection.enabled = canUse_SolDash;
         speedTimeDilation.enabled = canUse_SpeedDilation;
         nightVision.enabled = canUse_NightVision;
 //        photonShield.enabled = canUse_PhotonShield;
-        playerAttack.enabled = canUse_PrimaryAttack;
-        secondaryWeapon.enabled = canUse_SecondaryAttack;
+        playerAttack.enabled = CanAttack;
     }
     public float health;
     public void TakeDamage(float _damage)
@@ -88,54 +79,53 @@ public class PlayerManager : MonoBehaviour
     public Vector2 GetClosestPoint()
     {
         ClosestEnemy = null;
-        fieldOfView.FindVisibleTargets(transform.position);
-        List<Collider2D> Points  = fieldOfView.visibleTargets;
 
-        if(Points.Count == 0)
-        {
-            int playerDirection = (int) transform.localScale.x;
-            Vector2 newPoint = new();
+        if(selectionDirection.canSelect == false) return RandomPoint();
 
-            if(playerDirection > 0)
-            {
-                newPoint.x = Random.Range(transform.position.x, transform.position.x + 7f);
-            }
-            else
-            {
-                newPoint.x = Random.Range(transform.position.x - 7f, transform.position.x);
-            }
+        if(selectionDirection.CurrentSelectedEnemy == null) return RandomPoint();
 
-            newPoint.y = Random.Range(transform.position.y, transform.position.y + 7f);
+        ClosestEnemy = selectionDirection.CurrentSelectedEnemy.GetComponent<Collider2D>();
 
-            Vector2 direction = newPoint - (Vector2) transform.position;
-            float distance = direction.magnitude;
-
-            RaycastHit2D hit = Physics2D.Raycast (transform.position, direction, distance, ObstacleMask);
-            
-            if(hit.collider != null)
-            {
-                return hit.point;
-            }
-
-            return newPoint;
-        }
-
-        for(int i = 0; i < Points.Count; i++)
-        {
-            if(ClosestEnemy == null)
-            {
-                ClosestEnemy = Points[i];
-            }
-
-            float ShortestDistance = Vector2.Distance(transform.position, Points[i].transform.position);
-            float CurrentDistance = Vector2.Distance(transform.position, ClosestEnemy.transform.position);
-
-            if(ShortestDistance <=  CurrentDistance)
-            {
-                ClosestEnemy = Points[i];
-            }
-        }
-
+        if(ClosestEnemy.gameObject.layer == 9) return RandomPoint();
+        
         return ClosestEnemy.transform.position;
     }
+    public Vector2 RandomPoint()
+    {
+        int playerDirection = (int) transform.localScale.x;
+        Vector2 newPoint = new();
+
+        if(playerDirection > 0)
+        {
+            newPoint.x = Random.Range(transform.position.x, transform.position.x + 7f);
+        }
+        else
+        {
+            newPoint.x = Random.Range(transform.position.x - 7f, transform.position.x);
+        }
+
+        newPoint.y = Random.Range(transform.position.y, transform.position.y + 7f);
+
+        Vector2 direction = newPoint - (Vector2) transform.position;
+        float distance = Vector2.Distance(newPoint, (Vector2) transform.position);
+
+        RaycastHit2D hit = Physics2D.Raycast (transform.position, direction, distance, ObstacleMask);
+        
+        if(hit.collider != null)
+        {
+            return hit.point;
+        }
+
+        return newPoint;
+    }
 }
+
+/*  
+    CanSelect - False:
+    1. Random Point.
+
+    CanSelect - True:
+    1. Nearest Enemy
+    2. Selected Enemy
+    3. Random Point
+*/

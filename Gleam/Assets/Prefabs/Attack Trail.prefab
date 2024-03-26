@@ -128,7 +128,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 0.25
+  m_Time: 0.5
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.2
@@ -206,3 +206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fde50ca59e61824588b5ae1ece214e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flashColor: {r: 1, g: 1, b: 1, a: 1}
+  enemyMask:
+    serializedVersion: 2
+    m_Bits: 128

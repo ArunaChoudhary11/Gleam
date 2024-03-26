@@ -16,7 +16,7 @@ public class TutorialManager : MonoBehaviour
     {
         player = PlayerManager.Instance;
 
-        player.canUse_PrimaryAttack = true;
+        player.CanAttack = true;
         instructionsText.text = "WASD to Move";
         player.CanMove = true;
         yield return new WaitForSeconds(2f);

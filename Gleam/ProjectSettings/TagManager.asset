@@ -6,7 +6,7 @@ TagManager:
   tags:
   - Coin
   - Mirror
-  - OneWayPlatform
+  - Enemy System
   layers:
   - Default
   - TransparentFX
@@ -18,7 +18,7 @@ TagManager:
   - Enemy
   - Platfrom
   - Player
-  - 
+  - Prism
   - 
   - 
   - 

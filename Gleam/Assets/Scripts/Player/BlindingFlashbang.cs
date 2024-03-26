@@ -19,7 +19,7 @@ public class BlindingFlashbang : MonoBehaviour
         View.FindVisibleTargets(transform.position);
         for (int i = 0; i < View.visibleTargets.Count; i++)
         {
-            Enemytest enemy = View.visibleTargets[i].GetComponent<Enemytest>();
+            EnemyBehavior enemy = View.visibleTargets[i].GetComponent<EnemyBehavior>();
             if(enemy.isFlashed == false) StartCoroutine (enemy.Flashbang(2));
         }
     }    

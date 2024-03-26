@@ -142,13 +142,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFlashed: 0
   isRefracted: 0
-  attackRange: 10
-  mask:
-    serializedVersion: 2
-    m_Bits: 512
-  attackTimer: 0
+  speed: 2
   attackPrefab: {fileID: 6396890868277272460, guid: 769c86e8e04ed0c45961351388ec1744, type: 3}
-  speed: 10
-  attackSpeed: 5
-  attackDelay: 0
-  attackDirectionError: 0
+  attackSpeed: 10
+  attackRaySize: 5
+  damage: 10
+  attackCountdown: 5

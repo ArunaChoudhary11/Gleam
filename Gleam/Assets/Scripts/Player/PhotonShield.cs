@@ -49,7 +49,7 @@ public class PhotonShield : MonoBehaviour
     {
         GameObject attackGO = Instantiate(projectile, transform.position, Quaternion.identity);
         attackGO.transform.up = upDirection;
-        attackGO.GetComponent<EnemyTestAttack>().SetValues(attackSpeed, attackRaySize, damage);
+        attackGO.GetComponent<Laser>().SetValues(attackSpeed, attackRaySize, damage);
     }
     private void ResetShield()
     {

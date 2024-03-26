@@ -10,15 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1523922727511518216}
   - component: {fileID: 1523922727511518217}
-  - component: {fileID: 9125205139670115842}
   - component: {fileID: 1523922727511518223}
   - component: {fileID: 1523922727511518221}
-  - component: {fileID: 2150072501924666320}
   - component: {fileID: 1523922727511518212}
   - component: {fileID: 1523922727511518208}
   - component: {fileID: 1523922727511518222}
   - component: {fileID: 1523922727511518220}
-  - component: {fileID: 1523922727511518211}
   - component: {fileID: 1523922727511518214}
   - component: {fileID: 1523922727511516156}
   - component: {fileID: 1523922727511518215}
@@ -102,22 +99,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &9125205139670115842
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1523922727511518219}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cda2991cc5feb1a4488882858671af3f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  collectables:
-    greenCollectable: 0
-    blueCollectable: 0
-    RedCollectable: 0
 --- !u!50 &1523922727511518223
 Rigidbody2D:
   serializedVersion: 4
@@ -165,19 +146,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &2150072501924666320
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1523922727511518219}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e89288ff0d513b347bdc70748e1c33bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerCollider: {fileID: 1523922727511518221}
 --- !u!114 &1523922727511518212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,7 +187,6 @@ MonoBehaviour:
   canUse_NightVision: 0
   canUse_PhotonShield: 0
   canUse_PrimaryAttack: 1
-  canUse_SecondaryAttack: 0
   CanMove: 1
   CanJump: 1
   CanDash: 1
@@ -282,22 +249,6 @@ MonoBehaviour:
   AttackPoint: {fileID: 8005404050926662323, guid: bd21d36f43b67354d874d33ead8bdfd0, type: 3}
   AttackSpeed: 50
   AttackPower: 25
---- !u!114 &1523922727511518211
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1523922727511518219}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6a35d47611b74045a46766a578509aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Focus: 0
-  Intensity: 0
-  Wavelength: 0
-  Attack: {fileID: 0}
 --- !u!114 &1523922727511518214
 MonoBehaviour:
   m_ObjectHideFlags: 0

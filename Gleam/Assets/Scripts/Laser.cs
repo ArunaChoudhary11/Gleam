@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.Collections;
 using UnityEngine;
 
-public class Laser : MonoBehaviour
+public class LaserReflection : MonoBehaviour
 {
 
 
