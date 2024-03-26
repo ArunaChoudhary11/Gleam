@@ -7,9 +7,11 @@ public class PowerUps : MonoBehaviour
         Red , Blue , Green
     }
     public powerups Powerups;
+    private bool isCollected;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.TryGetComponent<PlayerMove>(out var player))
+        if(collision.TryGetComponent<Inventory>(out var player))
         {
             switch(Powerups)
             {
@@ -26,22 +28,25 @@ public class PowerUps : MonoBehaviour
                 break;
             }
 
-            Destroy(gameObject);
+            if(isCollected == true)
+                Destroy(gameObject);
         }
    }
-    private void RedPowerUp(PlayerMove player)
+    private void RedPowerUp(Inventory player)
     {
-
+        isCollected = true;
     }
-    private void BluePowerUp(PlayerMove player)
+    private void BluePowerUp(Inventory player)
     {
-
+      isCollected = true;
     }
-    private void GreenPowerUp(PlayerMove player)
+    private void GreenPowerUp(Inventory player)
     {
-        if(player.GetComponent<PhotonicHealingCheckpoints>().greenPowerUpsCount < 4)
+        if(player.collectables.greenCollectable < player.collectables.maxGreenCollect)
         {
-            player.GetComponent<PhotonicHealingCheckpoints>().greenPowerUpsCount++;
+            player.collectables.greenCollectable++;
+            isCollected = true;
         }
     }
+
 }
