@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Refract : MonoBehaviour
 {
-    public void DeviationEffect(Enemytest enemy)
+    public void DeviationEffect(EnemyBehavior enemy)
     {
         if(enemy.isRefracted == false)
         {

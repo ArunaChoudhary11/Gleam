@@ -3,12 +3,17 @@ using UnityEngine;
 public class PrimaryAttack : MonoBehaviour
 {
     private Vector2 _endPoint;
-    private TestHealth _enemyHealth;
+    private HealthSystem _enemyHealth;
     private float _attackPower;
     private float _attackSpeed;
     private bool attacking;
     public Color flashColor = Color.white;
-    public void SetValues(Vector2 endPoint, TestHealth enemyHealth, float power, float attackSpeed)
+    [SerializeField] private LayerMask enemyMask;
+    void Start()
+    {
+        Destroy(gameObject, 2.5f);
+    }
+    public void SetValues(Vector2 endPoint, HealthSystem enemyHealth, float power, float attackSpeed)
     {
         _endPoint = endPoint;
         _enemyHealth = enemyHealth;
@@ -31,6 +36,17 @@ public class PrimaryAttack : MonoBehaviour
                 {
                     _enemyHealth.TakeDamage(_attackPower);
                     ImpactEffects.Instance.FlashOnImpact(_enemyHealth.GetComponent<SpriteRenderer>(), 0.2f, flashColor);
+                }
+                else
+                {
+                    Collider2D col = Physics2D.OverlapCircle(transform.position, 1.5f, enemyMask);
+
+                    if(col != null)
+                    {
+                        HealthSystem enemyHealth = col.GetComponent<HealthSystem>();
+                        enemyHealth.TakeDamage(_attackPower);
+                        ImpactEffects.Instance.FlashOnImpact(enemyHealth.GetComponent<SpriteRenderer>(), 0.2f, flashColor);
+                    }
                 }
                 
                 Destroy(gameObject);
